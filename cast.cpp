@@ -174,6 +174,11 @@ namespace clib {
                 ast_recursion(node->child, level, os, rec);
                 os << ']';
                 break;
+            case ast_pair:
+                rec(node->child, level, os);
+                os << ": ";
+                rec(node->child->next, level, os);
+                break;
             case ast_string: {
                 os << '"' << display_str(node) << '"';
             }
@@ -216,7 +221,10 @@ namespace clib {
                 os << node->data._double;
                 break;
         }
-        if (node->parent && node->parent->flag == ast_list && node->next != node->parent->child)
-            os << ", ";
+        if (node->parent) {
+            if ((node->parent->flag == ast_list || node->parent->flag == ast_obj) && node->next != node->parent->child) {
+                os << ", ";
+            }
+        }
     }
 }
