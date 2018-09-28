@@ -15,6 +15,10 @@ int main(int argc, char *argv[]) {
   "description": "json helper",
   "language": "cpp",
   "link": "https://zhuanlan.zhihu.com/learncpp",
+  "test": {
+    "list_1": [1, 2, 3, 4, 5],
+    "list_2": [[], [[]], [[], []]]
+  }
 }
 )";
         clib::cparser p(json);

@@ -21,7 +21,8 @@
 - [ ] ast结点操作包装
 - [ ] 美化
 - [x] 反序列化（字符串到ast）
-- [ ] 序列化（ast到字符串）
+- [x] 序列化（ast到字符串）
+- [ ] 对象键值判重
 - [ ] 处理速度（这辈子都不可能的）
 - [ ] benchmark
 
@@ -36,6 +37,10 @@
   "description": "json helper",
   "language": "cpp",
   "link": "https://zhuanlan.zhihu.com/learncpp",
+  "test": {
+    "list_1": [1, 2, 3, 4, 5],
+    "list_2": [[], [[]], [[], []]]
+  }
 }
 )";
         clib::cparser p(json);

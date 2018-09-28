@@ -160,18 +160,28 @@ namespace clib {
             return;
         auto rec = [&](auto n, auto l, auto &os) { cast::print(n, l, os); };
         auto type = (ast_t) node->flag;
+        if (node->parent) {
+            if (node->parent->flag == ast_list || node->parent->flag == ast_obj) {
+                os << std::endl;
+                os << std::setw(level * 4) << "";
+            }
+        }
         switch (type) {
             case ast_root: // 根结点，全局声明
                 ast_recursion(node->child, level, os, rec);
                 break;
             case ast_obj:
                 os << '{';
-                ast_recursion(node->child, level, os, rec);
+                ast_recursion(node->child, level + 1, os, rec);
+                os << std::endl;
+                os << std::setw(level * 4) << "";
                 os << '}';
                 break;
             case ast_list:
                 os << '[';
-                ast_recursion(node->child, level, os, rec);
+                ast_recursion(node->child, level + 1, os, rec);
+                os << std::endl;
+                os << std::setw(level * 4) << "";
                 os << ']';
                 break;
             case ast_pair:
