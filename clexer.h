@@ -18,6 +18,9 @@ namespace clib {
         explicit clexer(string_t str);
         ~clexer();
 
+        clexer(const clexer &) = delete;
+        clexer &operator=(const clexer &) = delete;
+
         // 外部接口
 #define DEFINE_LEXER_GETTER(t) LEX_T(t) get_##t() const;
         DEFINE_LEXER_GETTER(char)

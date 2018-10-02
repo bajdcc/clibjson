@@ -10,8 +10,7 @@
 namespace clib {
 
     cparser::cparser(string_t str)
-        : lexer(str) {
-    }
+        : lexer(str) {}
 
     ast_node *cparser::parse() {
         // 清空词法分析结果
@@ -23,8 +22,12 @@ namespace clib {
         return ast.get_root();
     }
 
-    ast_node *cparser::root() {
+    ast_node *cparser::root() const {
         return ast.get_root();
+    }
+
+    cdom cparser::obj() {
+        return cdom(&ast, root()->child);
     }
 
     void cparser::next() {

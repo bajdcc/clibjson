@@ -13,4 +13,6 @@ add_executable(clibjson
         cparser.h
         cparser.cpp
         cast.h
-        cast.cpp)
+        cast.cpp
+        cdom.cpp
+        cdom.h)

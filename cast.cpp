@@ -19,7 +19,7 @@ namespace clib {
         current = root;
     }
 
-    ast_node *cast::get_root() {
+    ast_node *cast::get_root() const {
         return root;
     }
 
@@ -47,6 +47,7 @@ namespace clib {
         }
         return node;
     }
+
     ast_node *cast::set_sibling(ast_node *node, ast_node *sibling) {
         sibling->parent = node->parent;
         sibling->prev = node;
@@ -189,9 +190,8 @@ namespace clib {
                 os << ": ";
                 rec(node->child->next, level, os);
                 break;
-            case ast_string: {
+            case ast_string:
                 os << '"' << display_str(node) << '"';
-            }
                 break;
             case ast_char:
                 if (isprint(node->data._char))
@@ -232,9 +232,44 @@ namespace clib {
                 break;
         }
         if (node->parent) {
-            if ((node->parent->flag == ast_list || node->parent->flag == ast_obj) && node->next != node->parent->child) {
+            if ((node->parent->flag == ast_list || node->parent->flag == ast_obj) &&
+                node->next != node->parent->child) {
                 os << ", ";
             }
         }
+    }
+
+    ast_node *cast::index(ast_node *node, int index) {
+        auto child = node->child;
+        if (child) {
+            if (child->next == child) {
+                return index == 0 ? child : nullptr;
+            }
+            auto head = child;
+            for (auto i = 0; i < index; ++i) {
+                child = child->next;
+                if (child == head)
+                    return nullptr;
+            }
+            return child;
+        }
+        return nullptr;
+    }
+
+    ast_node *cast::index(ast_node *node, const string_t &index) {
+        auto child = node->child;
+        if (child) {
+            if (child->next == child) {
+                return index == child->child->data._string ? child : nullptr;
+            }
+            auto head = child;
+            auto i = head;
+            do {
+                if (index == i->child->data._string)
+                    return i->child->next;
+                i = i->next;
+            } while (i != head);
+        }
+        return nullptr;
     }
 }

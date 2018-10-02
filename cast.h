@@ -71,7 +71,10 @@ namespace clib {
         cast();
         ~cast() = default;
 
-        ast_node *get_root();
+        cast(const cast &) = delete;
+        cast &operator=(const cast &) = delete;
+
+        ast_node *get_root() const;
 
         ast_node *new_node(ast_t type);
         ast_node *new_child(ast_t type, bool step = true);
@@ -89,6 +92,9 @@ namespace clib {
         void to(ast_to_t type);
 
         static void print(ast_node *node, int level, std::ostream &os);
+
+        static ast_node *index(ast_node *node, int index);
+        static ast_node *index(ast_node *node, const string_t &index);
 
         void reset();
     private:

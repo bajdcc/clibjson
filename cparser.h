@@ -8,6 +8,7 @@
 #include "types.h"
 #include "clexer.h"
 #include "cast.h"
+#include "cdom.h"
 
 namespace clib {
 
@@ -16,8 +17,12 @@ namespace clib {
         explicit cparser(string_t str);
         ~cparser() = default;
 
+        cparser(const cparser &) = delete;
+        cparser &operator=(const cparser &) = delete;
+
         ast_node *parse();
-        ast_node *root();
+        ast_node *root() const;
+        cdom obj();
 
     private:
         void next();
