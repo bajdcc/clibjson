@@ -10,7 +10,7 @@
 namespace clib {
 
     cparser::cparser(string_t str)
-        : lexer(str) {}
+            : lexer(str) {}
 
     ast_node *cparser::parse() {
         // 清空词法分析结果

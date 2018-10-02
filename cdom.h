@@ -24,6 +24,20 @@ namespace clib {
 
         void output(std::ostream &os) const;
 
+#define DEFINE_NODE_ASSIGN(t) cdom &operator=(const LEX_T(t) &);
+        DEFINE_NODE_ASSIGN(char)
+        DEFINE_NODE_ASSIGN(uchar)
+        DEFINE_NODE_ASSIGN(short)
+        DEFINE_NODE_ASSIGN(ushort)
+        DEFINE_NODE_ASSIGN(int)
+        DEFINE_NODE_ASSIGN(uint)
+        DEFINE_NODE_ASSIGN(long)
+        DEFINE_NODE_ASSIGN(ulong)
+        DEFINE_NODE_ASSIGN(float)
+        DEFINE_NODE_ASSIGN(double)
+        DEFINE_NODE_ASSIGN(string)
+#undef DEFINE_NODE_ASSIGN
+
     private:
         cast *ast{nullptr};
         ast_node *node{nullptr};

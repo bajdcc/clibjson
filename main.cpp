@@ -27,7 +27,11 @@ int main(int argc, char *argv[]) {
         std::cout << std::endl;
         auto dom = p.obj();
         std::cout << "Author: " << dom["author"] << std::endl;
-        std::cout << "Test_1: " << dom["test"]["list_1"][4] << std::endl;
+        auto test = dom["test"];
+        std::cout << "Test_1: " << test["list_1"][4] << std::endl;
+        test["list_1"][3] = 6;
+        test["list_1"][4] = "test";
+        std::cout << test << std::endl;
     } catch (const std::exception& e) {
         printf("ERROR: %s\n", e.what());
     }

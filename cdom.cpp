@@ -38,15 +38,10 @@ namespace clib {
         auto type = (ast_t) node->flag;
         switch (type) {
             case ast_root:
-                break;
             case ast_obj:
-                os << "{Object}";
-                break;
             case ast_list:
-                os << "[List]";
-                break;
             case ast_pair:
-                os << "(Pair)";
+                clib::cast::print(node, 0, std::cout);
                 break;
             case ast_string:
                 os << node->data._string;
@@ -82,6 +77,29 @@ namespace clib {
                 os << node->data._double;
                 break;
         }
+    }
+
+#define DEFINE_NODE_ASSIGN(t) cdom &cdom::operator=(const LEX_T(t) &v) { \
+    node->flag = ast_##t; \
+    node->data._##t = v; \
+    return *this; }
+
+    DEFINE_NODE_ASSIGN(char)
+    DEFINE_NODE_ASSIGN(uchar)
+    DEFINE_NODE_ASSIGN(short)
+    DEFINE_NODE_ASSIGN(ushort)
+    DEFINE_NODE_ASSIGN(int)
+    DEFINE_NODE_ASSIGN(uint)
+    DEFINE_NODE_ASSIGN(long)
+    DEFINE_NODE_ASSIGN(ulong)
+    DEFINE_NODE_ASSIGN(float)
+    DEFINE_NODE_ASSIGN(double)
+#undef DEFINE_NODE_DATA
+
+    cdom &cdom::operator=(const string_t &v) {
+        node->flag = ast_string;
+        ast->set_str(node, v);
+        return *this;
     }
 
     std::ostream &operator<<(std::ostream &os, const cdom &dom) {
